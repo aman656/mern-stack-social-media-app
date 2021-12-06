@@ -8,7 +8,7 @@ const Share = ()=> {
           <div className="shareTop">
             <img className="shareImg" src="/assets/me.jpg" alt="" />
             <input
-              placeholder="What's in your mind Safak?"
+              placeholder="What's in your mind Aman?"
               className="shareInp"
             />
           </div>
