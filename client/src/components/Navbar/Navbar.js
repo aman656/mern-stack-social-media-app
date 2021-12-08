@@ -1,11 +1,14 @@
 import "./Navbar.css";
 import {Search,Notifications,Chat,Person} from '@mui/icons-material' ;
+import {Link} from "react-router-dom"
 
 const Navbar = ()=>{
     return(
         <div className="navContainer">
         <div className="navLeft">
+          <Link to="/" style={{textDecoration:"none"}}>
           <span className="logo"><i>Meta</i></span>
+          </Link>
         </div>
         <div className="navCenter">
           <div className="searchbar">
