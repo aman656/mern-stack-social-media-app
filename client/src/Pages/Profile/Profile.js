@@ -2,9 +2,11 @@ import "./profile.css";
 import Navbar from "../../components/Navbar/Navbar";
 import LeftBar from "../../components/LeftBar/LeftBar";
 import Feed from "../../components/Feed/Feed";
-// import Right from "../../components/Right/Right";
 
-export default function Profile() {
+
+const Profile = ()=> {
+ 
+
   return (
     <>
       <Navbar />
@@ -30,7 +32,7 @@ export default function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed />
+            <Feed uname="ali" />
             {/* <Right profile/> */}
           </div>
         </div>
@@ -38,3 +40,5 @@ export default function Profile() {
     </>
   );
 }
+
+export default Profile

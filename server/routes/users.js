@@ -54,10 +54,10 @@ router.delete("/:id",async(req,res)=>{
 })
 
 router.get("/:id",async(req,res)=>{
-  const id = JSON.stringify(req.body.userId)
-  var uid = mongoose.Types.ObjectId(id)
+  const id = req.params.id
+//   var uid = mongoose.Types.ObjectId(id)
     try{
-        const fetchinguser = await user.findById(uid)
+        const fetchinguser = await user.findById(id)
         const {password,...other} = fetchinguser._doc
         res.status(200).json(other)
 

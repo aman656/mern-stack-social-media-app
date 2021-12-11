@@ -7,8 +7,7 @@ const morgan = require("morgan")
 const userRoute = require('./routes/users')
 const authRoute = require("./routes/auth")
 const postRoute = require("./routes/post")
-
-
+const cors = require("cors")
 
 dotenv.config()
 mongoose.connect(process.env.MONGOOSE_URL,{useNewUrlParser:true,useUnifiedTopology: true },()=>{
@@ -18,6 +17,7 @@ mongoose.connect(process.env.MONGOOSE_URL,{useNewUrlParser:true,useUnifiedTopolo
 app.use(express.json())
 app.use(helmet())
 app.use(morgan("common"))
+app.use(cors())
 
 
 app.use('/api/users',userRoute)
