@@ -12,7 +12,7 @@ const Post = ({postss})=>{
     const[islike,setislike] = useState(false)
     useEffect(()=>{
         const fetchingUser = async()=>{
-            const res = await axios.get(`/users/${postss.uid}`)
+            const res = await axios.get(`/users/?id=${postss.uid}`)
             setUser(res.data)
 
         }
@@ -29,7 +29,7 @@ const Post = ({postss})=>{
             <div className="postTop">
             <div className="postTl">
                 <Link to= {`/profile/${user.name}`}>
-                <img  className="postTlimg" src={postss.coverImsge || "/assets/no1.jpg"}    alt="aman"            /></Link>
+                <img  className="postTlimg" src={postss.coverImage || "/assets/no1.jpg"}    alt="aman"            /></Link>
                 <span className="username">{user.name}</span>
                 <span className="time" style={{color:"gray"}}>{format(postss.createdAt)}</span>
             </div>

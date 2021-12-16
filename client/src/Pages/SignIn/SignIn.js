@@ -1,8 +1,19 @@
 import './SignIn.css'
-
+import {useRef,useContext} from "react"
+import { loggingIn } from '../../servercontact'
+import { AuthContext } from '../../context/AuthContext'
 
 
 function SignIn() {
+  const emailRef = useRef()
+  const passRef = useRef()
+  const {user,fetching,error,dispatch} = useContext(AuthContext)
+  const submitHandler = (event)=>{
+    loggingIn({email:emailRef.current.value,passRef:passRef.current.value},dispatch)
+    event.preventDefault()
+
+  }
+  console.log(user)
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -13,15 +24,15 @@ function SignIn() {
           </span>
         </div>
         <div className="loginRight">
-          <div className="loginBox">
-            <input placeholder="Email" className="loginInput" />
-            <input placeholder="Password" className="loginInput" />
-            <button className="loginButton">Log In</button>
+          <form className="loginBox" onSubmit={submitHandler} >
+            <input placeholder="Email" type="email" ref={emailRef} required className="loginInput" />
+            <input placeholder="Password" type="password" ref={passRef} minLength={6} required className="loginInput" />
+            <button className="loginButton"> Loading</button>
             <span className="loginForgot">Forgot Password?</span>
             <button className="loginRegisterButton">
               Create a New Account
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>

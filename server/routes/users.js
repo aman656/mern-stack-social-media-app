@@ -53,11 +53,12 @@ router.delete("/:id",async(req,res)=>{
   
 })
 
-router.get("/:id",async(req,res)=>{
-  const id = req.params.id
+router.get("/",async(req,res)=>{
+  const id = req.query.id
+  const uname = req.query.uname
 //   var uid = mongoose.Types.ObjectId(id)
     try{
-        const fetchinguser = await user.findById(id)
+        const fetchinguser = id ? await user.findById(id) : await user.findOne({name:uname})
         const {password,...other} = fetchinguser._doc
         res.status(200).json(other)
 

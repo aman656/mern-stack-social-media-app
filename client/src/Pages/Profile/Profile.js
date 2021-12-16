@@ -2,9 +2,23 @@ import "./profile.css";
 import Navbar from "../../components/Navbar/Navbar";
 import LeftBar from "../../components/LeftBar/LeftBar";
 import Feed from "../../components/Feed/Feed";
-
+import axios from 'axios'
+import {useState,useEffect} from 'react'
+import {useParams} from 'react-router-dom'
 
 const Profile = ()=> {
+  const[user,setUser] = useState({})
+  const params = useParams().username
+  console.log(params)
+  useEffect(()=>{
+    const fetchUser = async()=>{
+      const res =  await axios.get(`/users/?uname=${params}`)
+      setUser(res.data)
+
+    }
+    fetchUser()
+
+  },[params])
  
 
   return (
@@ -22,17 +36,17 @@ const Profile = ()=> {
               />
               <img
                 className="profileUserImg"
-                src="assets/person/7.jpeg"
+                src="assets/leaf.jpg"
                 alt=""
               />
             </div>
             <div className="profileInfo">
-                <h4 className="profileInfoName">Aman Siddiqui</h4>
+                <h4 className="profileInfoName">{user.name}</h4>
                 <span className="profileInfoDesc">Hello my friends!</span>
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed uname="ali" />
+            <Feed uname={params} />
             {/* <Right profile/> */}
           </div>
         </div>
