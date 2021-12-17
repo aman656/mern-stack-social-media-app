@@ -3,13 +3,16 @@ import {MoreVert} from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import {format} from 'timeago.js'
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 import {Link} from "react-router-dom"
 
 
 const Post = ({postss})=>{
-    const [like,setlike]  = useState(postss.like)
+    const [like,setlike]  = useState(postss.likes.length)
     const [user,setUser] = useState({})
     const[islike,setislike] = useState(false)
+    const {user:curr}  = useContext(AuthContext)
     useEffect(()=>{
         const fetchingUser = async()=>{
             const res = await axios.get(`/users/?id=${postss.uid}`)
@@ -20,6 +23,13 @@ const Post = ({postss})=>{
 
     },[postss.uid])
     const likeHandler = ()=>{
+        try{
+            axios.put(`/post/${postss._id }/like`,{uid:curr._id})
+
+        }catch(err){
+            console.log(err)
+
+        }
         setlike(islike ? like -1 : like+1)
         setislike(!islike)
     }

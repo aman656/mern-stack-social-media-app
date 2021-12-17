@@ -55,6 +55,7 @@ router.put("/:id/like",async(req,res)=>{
         }
 
     }catch(err){
+        console.log(err)
         res.status(500).json(err)
 
     }

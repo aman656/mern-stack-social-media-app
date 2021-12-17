@@ -1,10 +1,12 @@
 import './Share.css'
 import {PermMedia,Label,Room,EmojiEmotions} from "@mui/icons-material"
 import { AuthContext } from '../../context/AuthContext';
-import {useContext} from 'react'
+import {useContext,useRef,useState} from 'react'
 
 const Share = ()=> {
   const {user} = useContext(AuthContext)
+  const descRef = useRef()
+  const [file,setFile] = useState(null)
   console.log(user)
     return (
       <div className="share">
@@ -12,17 +14,19 @@ const Share = ()=> {
           <div className="shareTop">
             <img className="shareImg" src="/assets/me.jpg" alt="" />
             <input
-              placeholder="What's in your mind" 
+              placeholder={"What's in your mind " + user.name} 
               className="shareInp"
+              ref={descRef}
             />
           </div>
           <hr className="shareHr"/>
           <form className="shareBottom">
               <div className="shareOptions">
-                  <div className="shareOption">
+                  <label className="shareOption" htmlFor='file' >
                       <PermMedia htmlColor="tomato" className="shareIcon"/>
                       <span className="shareOptionText">Photo or Video</span>
-                  </div>
+                      <input  style={{display:"none"}} type={"file"} id='file' accept='.png,.jpg,.jpeg' onChange={(e)=>setFile(e.target.files[0])}   />
+                  </label>
                   <div className="shareOption">
                       <Label htmlColor="blue" className="shareIcon"/>
                       <span className="shareOptionText">Tag</span>

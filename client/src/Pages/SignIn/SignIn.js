@@ -9,7 +9,7 @@ function SignIn() {
   const passRef = useRef()
   const {user,fetching,error,dispatch} = useContext(AuthContext)
   const submitHandler = (event)=>{
-    loggingIn({email:emailRef.current.value,passRef:passRef.current.value},dispatch)
+    loggingIn({email:emailRef.current.value,password:passRef.current.value},dispatch)
     event.preventDefault()
 
   }

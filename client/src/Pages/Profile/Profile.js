@@ -3,11 +3,13 @@ import Navbar from "../../components/Navbar/Navbar";
 import LeftBar from "../../components/LeftBar/LeftBar";
 import Feed from "../../components/Feed/Feed";
 import axios from 'axios'
-import {useState,useEffect} from 'react'
+import {useState,useEffect,useContext} from 'react'
 import {useParams} from 'react-router-dom'
+import { AuthContext } from "../../context/AuthContext";
 
 const Profile = ()=> {
-  const[user,setUser] = useState({})
+  const[usering,setUser] = useState({})
+  const {user} =  useContext(AuthContext)
   const params = useParams().username
   console.log(params)
   useEffect(()=>{
@@ -31,13 +33,13 @@ const Profile = ()=> {
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src="assets/cover1.jpg"
+                src='/assets/cover.jpg'
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src="assets/leaf.jpg"
-                alt=""
+                src={user.coverPic ? user.coverPic : '/assets/no.jpg'}
+                alt="no one"
               />
             </div>
             <div className="profileInfo">

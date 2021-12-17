@@ -3,14 +3,17 @@ import Share from '../Shareable/Share'
 import Post from '../Posting/Post'
 import { useState,useEffect } from 'react'
 import axios from 'axios'
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 // import { Posts } from '../../dummy-data'
 
 const Feed = ({uname})=>{
     const [post,setPost] = useState([])
+    const {user} = useContext(AuthContext)
     useEffect(()=>{
         const fetching = async()=>{
             const res =
-             !uname ? await axios.get("/post/timeline/61b0ed41cffee25b5aaaaa47") :
+             !uname ? await axios.get(`/post/timeline/${user._id}`) :
              await axios.get('/post/prof/' + uname)
 
             console.log(res.data)
@@ -18,7 +21,7 @@ const Feed = ({uname})=>{
 
         }
         fetching()
-    },[uname])
+    },[uname,user._id])
     return (
         <div className="feed">
     <div className="feedWrap">

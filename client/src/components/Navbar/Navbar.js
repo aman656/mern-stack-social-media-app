@@ -1,8 +1,11 @@
 import "./Navbar.css";
 import {Search,Notifications,Chat,Person} from '@mui/icons-material' ;
 import {Link} from "react-router-dom"
+import {useContext} from 'react'
+import { AuthContext } from "../../context/AuthContext";
 
 const Navbar = ()=>{
+  const {user} = useContext(AuthContext)
     return(
         <div className="navContainer">
         <div className="navLeft">
@@ -38,7 +41,9 @@ const Navbar = ()=>{
               <span className="navIconBadge">1</span>
             </div>
           </div>
+          <Link to={`/profile/${user.name}`}>
           <img src="/assets/me.jpg" alt="" className="navImg"/>
+          </Link>
         </div>
       </div>
 
