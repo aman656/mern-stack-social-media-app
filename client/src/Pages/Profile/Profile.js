@@ -7,22 +7,25 @@ import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
-import { Add } from "@mui/icons-material";
+import { Add, Remove } from "@mui/icons-material";
 
 const Profile = () => {
-  const [usering, setUser] = useState({});
-  const { user } = useContext(AuthContext);
+  const [user, setUser] = useState({});
+  const { user: curruser, dispatch } = useContext(AuthContext);
   const [allfriends, setAllFriends] = useState([]);
   const params = useParams().uname;
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  console.log(params);
+  const [isfollow, setfollow] = useState(curruser.following.includes(user?.id));
+
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get(`/users/?uname=${params}`);
+      console.log(res.data);
+      console.log(curruser);
       setUser(res.data);
     };
     fetchUser();
-  }, [params]);
+  }, [params, curruser]);
 
   useEffect(() => {
     const gettingFriends = async () => {
@@ -35,6 +38,24 @@ const Profile = () => {
     };
     gettingFriends();
   }, [user._id]);
+  const followHandler = async () => {
+    try {
+      if (isfollow) {
+        await axios.put("/users/" + user._id + "/unfollow", {
+          userId: curruser._id,
+        });
+        dispatch({ type: "unfollow", payload: user._id });
+      } else {
+        await axios.put("/users/" + user._id + "/follow", {
+          userId: curruser._id,
+        });
+        dispatch({ type: "follow", payload: user._id });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setfollow(!isfollow);
+  };
 
   return (
     <>
@@ -47,18 +68,24 @@ const Profile = () => {
               <img
                 className="profileCoverImg"
                 src={
-                  user.coverPic ? PF + user.coverPic : PF + "assets/cover1.jpg"
+                  curruser.coverPic
+                    ? PF + curruser.coverPic
+                    : PF + "assets/cover1.jpg"
                 }
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src={user.profilePic ? PF + user.profilePic : PF + "no1.jpg"}
+                src={
+                  curruser.profilePic
+                    ? PF + curruser.profilePic
+                    : PF + "no1.jpg"
+                }
                 alt="no one"
               />
             </div>
             <div className="profileInfo">
-              <h4 className="profileInfoName">{user.name}</h4>
+              <h4 className="profileInfoName">{curruser.name}</h4>
               <span className="profileInfoDesc">Hello my friends!</span>
             </div>
           </div>
@@ -66,9 +93,10 @@ const Profile = () => {
             <Feed uname={params} />
             <div className="rightbar">
               <div className="rightbarwrapper">
-                {user.name !== params && (
-                  <button className="followbtn">
-                    Follow <Add />
+                {user.name !== curruser && (
+                  <button className="followbtn" onClick={followHandler}>
+                    {isfollow ? "Unfollow" : "Follow"}
+                    {isfollow ? <Remove /> : <Add />}
                   </button>
                 )}
                 <h4 className="rightbarTitle">User information</h4>
@@ -84,9 +112,9 @@ const Profile = () => {
                   <div className="rightbarInfoItem">
                     <span className="rightbarInfoKey">Relationship:</span>
                     <span className="rightbarInfoValue">
-                      {user.relationship === 1
+                      {curruser.relationship === 1
                         ? "Single"
-                        : user.relationship === 1
+                        : curruser.relationship === 1
                         ? "Married"
                         : "Single"}
                     </span>

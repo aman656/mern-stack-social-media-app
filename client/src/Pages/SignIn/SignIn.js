@@ -2,11 +2,12 @@ import "./SignIn.css";
 import { useRef, useContext } from "react";
 import { loggingIn } from "../../servercontact";
 import { AuthContext } from "../../context/AuthContext";
+import { CircularProgress } from "@mui/material";
 
 function SignIn() {
   const emailRef = useRef();
   const passRef = useRef();
-  const { user, dispatch } = useContext(AuthContext);
+  const { user, dispatch, fetching } = useContext(AuthContext);
   const submitHandler = (event) => {
     loggingIn(
       { email: emailRef.current.value, password: passRef.current.value },
@@ -42,8 +43,7 @@ function SignIn() {
               className="loginInput"
             />
             <button className="loginButton" type="submit">
-              {" "}
-              Loading
+              {fetching ? "Loading..." : "Login"}
             </button>
             <span className="loginForgot">Forgot Password?</span>
             <button className="loginRegisterButton">
