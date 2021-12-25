@@ -1,0 +1,92 @@
+.chat {
+  height: calc(100vh - 70px);
+  display: flex;
+}
+
+.menu {
+  flex: 3.5;
+}
+
+.menuInput {
+  width: 90%;
+  padding: 10px 5px;
+  border: none;
+  border-bottom: 1px solid gray;
+}
+
+.box {
+  flex: 5.5;
+}
+
+.boxWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.boxTop {
+  height: 100%;
+  overflow-y: scroll;
+  padding-right: 10px;
+}
+
+.boxBottom {
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.messageInput {
+  width: 80%;
+  height: 90px;
+  padding: 10px;
+}
+
+.submitButton {
+  width: 70px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: teal;
+  color: white;
+}
+
+.online {
+  flex: 3;
+}
+
+.menuWrapper,
+.boxWrapper,
+.onlineWrapper {
+  padding: 10px;
+  height: 100%;
+}
+
+.noConversationText {
+  position: absolute;
+  top: 10%;
+  font-size: 40px;
+  color: rgb(224, 220, 220);
+  cursor: default;
+}
+
+@media screen and (max-width: 768px) {
+  .menu {
+    flex: 1;
+  }
+
+  .menuInput {
+    display: none;
+  }
+
+  .box {
+    flex: 10;
+  }
+
+  .online {
+    flex: 1px;
+  }
+}

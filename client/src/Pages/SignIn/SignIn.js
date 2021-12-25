@@ -2,7 +2,6 @@ import "./SignIn.css";
 import { useRef, useContext } from "react";
 import { loggingIn } from "../../servercontact";
 import { AuthContext } from "../../context/AuthContext";
-import { CircularProgress } from "@mui/material";
 
 function SignIn() {
   const emailRef = useRef();
